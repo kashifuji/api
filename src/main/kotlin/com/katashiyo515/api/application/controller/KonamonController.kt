@@ -6,8 +6,10 @@ import com.katashiyo515.api.domain.repository.KonamonRepository
 import org.mapstruct.factory.Mappers
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.stream.Collectors
+
 
 @RestController
 @RequestMapping("api/v0.0.2/konamons")
@@ -31,7 +33,7 @@ class KonamonController (var konamonRepository : KonamonRepository) {
 
     @PostMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request : KonamonResource): KonamonResource {
+    fun create(@RequestBody @Validated request : KonamonResource): KonamonResource {
         val konamon = konamonRepository.create(mapper.resourceToKonamon(request))
         return mapper.konamonToResource(konamon)
     }
