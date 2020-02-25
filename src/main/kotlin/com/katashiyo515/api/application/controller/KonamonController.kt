@@ -13,7 +13,7 @@ import java.util.stream.Collectors
 
 @RestController
 @RequestMapping("api/v0.0.2/konamons")
-class KonamonController (var konamonRepository : KonamonRepository) {
+class KonamonController (private val konamonRepository : KonamonRepository) {
     val mapper = Mappers.getMapper(KonamonResourceMapper::class.java)
 
     @GetMapping(value = ["{id}"])
@@ -41,7 +41,9 @@ class KonamonController (var konamonRepository : KonamonRepository) {
     @PutMapping(value = ["{id}"])
     @ResponseStatus(HttpStatus.OK)
     fun update(@PathVariable("id") id : Int, @RequestBody request: KonamonResource): KonamonResource {
-        val konamon = konamonRepository.update(mapper.resourceToKonamon(request))
+        var reqestkonamon = mapper.resourceToKonamon(request)
+        reqestkonamon.id = id
+        val konamon = konamonRepository.update(reqestkonamon)
         return mapper.konamonToResource(konamon)
     }
 

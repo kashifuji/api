@@ -3,7 +3,9 @@ package com.katashiyo515.api.common.error
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.katashiyo515.api.common.exception.KonamonResourceNotFoundException
+import com.katashiyo515.api.common.exception.ResourceLockedException
+import com.katashiyo515.api.common.exception.ResourceDelicateException
+import com.katashiyo515.api.common.exception.ResourceNotFoundException
 import com.katashiyo515.api.common.message.Message
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -37,14 +39,14 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     // 404
     override fun handleNoHandlerFoundException(ex: NoHandlerFoundException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
-        log.error(ex.message, ex)
+        log.error("[{}] {}", ErrorCodeDefinition.NOT_FOUND.code, Message.getMessage(ErrorCodeDefinition.NOT_FOUND.code), ex)
         return handleExceptionInternal(ex,
                 apiErrorCreator.createApiError(ApiErrorDefinition.NOT_FOUND),
                 headers, status, request)
     }
 
     override fun handleHttpMessageNotReadable(ex: HttpMessageNotReadableException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
-        var message = when (ex.cause) {
+        val message = when (ex.cause) {
             is InvalidFormatException -> {
                 "invalid value. field = " + (ex.cause as InvalidFormatException).path[0].fieldName
             }
@@ -66,27 +68,43 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     // request validation
     override fun handleMethodArgumentNotValid(ex: MethodArgumentNotValidException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
-        var message = ex.bindingResult.fieldErrors.joinToString(". ") { it.field + " : " + it.defaultMessage.toString() }
-        log.error("[{}] {}",ErrorCodeDefinition.BAD_REQUEST, Message.getMessage(ErrorCodeDefinition.BAD_REQUEST.code,message), ex)
+        val message = ex.bindingResult.fieldErrors.joinToString(". ") { it.field + " : " + it.defaultMessage.toString() }
+        log.error("[{}] {}",ErrorCodeDefinition.BAD_REQUEST, Message.getMessage(ErrorCodeDefinition.BAD_REQUEST.code, message), ex)
         return handleExceptionInternal(ex,
                 apiErrorCreator.createApiError(ApiErrorDefinition.BAD_REQUEST, message),
                 headers, status, request)
     }
 
-    @ExceptionHandler(KonamonResourceNotFoundException::class)
-    fun handleKonamonResourceNotFoundException(e : KonamonResourceNotFoundException, request : WebRequest): ResponseEntity<Any> {
-        log.error(e.message, e)
+    @ExceptionHandler(ResourceNotFoundException::class)
+    fun handleResourceNotFoundException(e : ResourceNotFoundException, request : WebRequest): ResponseEntity<Any> {
+        log.error("[{}] {}", e.code, e.detail, e)
         return handleExceptionInternal(e,
-                apiErrorCreator.createApiError(ApiErrorDefinition.INTERNAL_SERVER_ERROR, ""),
-                HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request)
+                apiErrorCreator.createApiError(ApiErrorDefinition.RESOURCE_NOT_FOUND, ""),
+                HttpHeaders(), HttpStatus.NOT_FOUND, request)
+    }
+
+    @ExceptionHandler(ResourceDelicateException::class)
+    fun handleResourceDelicateException(e : ResourceDelicateException, request: WebRequest): ResponseEntity<Any> {
+        log.error("[{}] {}", e.code, e.detail, e)
+        return handleExceptionInternal(e,
+                apiErrorCreator.createApiError(ApiErrorDefinition.RESOURCE_ALREDY_EXISTS, ""),
+                HttpHeaders(), HttpStatus.CONFLICT, request)
+    }
+
+    @ExceptionHandler(ResourceLockedException::class)
+    fun handleResourceLockedExceptionException(e : ResourceLockedException, request: WebRequest): ResponseEntity<Any> {
+        log.error("[{}] {}", e.code, e.detail, e)
+        return handleExceptionInternal(e,
+                apiErrorCreator.createApiError(ApiErrorDefinition.ABORTED),
+                HttpHeaders(), HttpStatus.CONFLICT, request)
     }
 
     // その他の例外
     @ExceptionHandler(Exception::class)
     fun handleAllException(e : Exception, request : WebRequest): ResponseEntity<Any> {
-        log.error(e.message, e)
+        log.error("[{}] {}", ErrorCodeDefinition.UnKnown.code, Message.getMessage(ErrorCodeDefinition.UnKnown.code), e)
         return handleExceptionInternal(e,
-                apiErrorCreator.createApiError(ApiErrorDefinition.INTERNAL_SERVER_ERROR, ""),
+                apiErrorCreator.createApiError(ApiErrorDefinition.INTERNAL_SERVER_ERROR),
                 HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request)
     }
 }
