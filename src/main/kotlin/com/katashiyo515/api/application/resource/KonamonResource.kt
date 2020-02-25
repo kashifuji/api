@@ -10,7 +10,6 @@ import javax.validation.constraints.*
 class KonamonResource : Serializable {
     private val serialVersionUID = 1L
 
-    @NotNull(message = "can't be empty")
     @Range(min = 0, max = 99999, message = "must be {min} - {max}")
     var konamonId : Int? = null
 
@@ -21,6 +20,6 @@ class KonamonResource : Serializable {
     @Size(min = 0, max = 100)
     var description : String? = null
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    var updateTime : Date? = null
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    var updateTime : Date? = null
 }
