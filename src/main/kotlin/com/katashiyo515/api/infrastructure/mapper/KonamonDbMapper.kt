@@ -1,8 +1,12 @@
 package com.katashiyo515.api.infrastructure.mapper
 
 import com.katashiyo515.api.domain.entity.Konamon
-import org.apache.ibatis.annotations.*
-
+import org.apache.ibatis.annotations.Delete
+import org.apache.ibatis.annotations.Insert
+import org.apache.ibatis.annotations.Mapper
+import org.apache.ibatis.annotations.Options
+import org.apache.ibatis.annotations.Select
+import org.apache.ibatis.annotations.Update
 
 @Mapper
 interface KonamonDbMapper {

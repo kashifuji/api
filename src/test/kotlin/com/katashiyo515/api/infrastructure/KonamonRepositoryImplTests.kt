@@ -17,7 +17,7 @@ class KonamonRepositoryImplTests {
     private lateinit var target: KonamonRepositoryImpl
 
     @Test
-    fun findByIdTest () {
+    fun findByIdTest() {
         var actual = target.findById(1)
 
         var expected = Konamon(id = 1, name = "okonomiyaki", description = "umaiyo")
