@@ -1,4 +1,4 @@
-name: Danger
+name: Review
 
 on: 
   pull_request:
@@ -7,7 +7,7 @@ on:
       - release/*
 
 jobs:
-  build:
+  danger:
 
     runs-on: ubuntu-latest
 
