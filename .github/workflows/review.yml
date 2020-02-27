@@ -7,58 +7,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
-      - name: Use Node.js 10.x
+      - name: setup Node.js
         uses: actions/setup-node@v1
-        with:
-          version: 10.x
       - name: install yarn
         run: npm install -g yarn
       - name: install danger
         run: yarn add danger --dev
-#       - name: yarn install, build, and test
-#         run: |
-#           yarn install  --frozen-lockfile
-#           yarn build
-#           yarn test
       - name: Danger
         run: yarn danger ci
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-# jobs:
-#   build:
-#    name: Danger JS
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v1
-#      - name: Danger
-#        uses: danger/danger-js@9.1.6
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-# on: 
-#   pull_request:
-#     branches:
-#       - master
-#       - release/*
-
-# jobs:
-#   danger:
-
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: setup Node.js
-#         uses: actions/setup-node@v1
-#       - name: install yarn
-#         run: npm install -g yarn
-#       - name: install danger
-#         run: yarn add danger --dev
-#       - name: run danger
-#         run: danger
-
-# # yarn install
-# #     - name: Danger JS Action
-# #       uses: danger/danger-js@9.2.10
-# #       env:
-# #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
