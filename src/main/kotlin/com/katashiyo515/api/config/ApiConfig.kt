@@ -1,15 +1,15 @@
-//package com.katashiyo515.api.config
+// package com.katashiyo515.api.config
 //
-//import org.springframework.beans.factory.annotation.Autowired
-//import org.springframework.context.MessageSource
-//import org.springframework.context.annotation.Bean
-//import org.springframework.context.annotation.Configuration
-//import org.springframework.validation.Validator
-//import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
+// import org.springframework.beans.factory.annotation.Autowired
+// import org.springframework.context.MessageSource
+// import org.springframework.context.annotation.Bean
+// import org.springframework.context.annotation.Configuration
+// import org.springframework.validation.Validator
+// import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 //
 //
-//@Configuration
-//class ApiConfig {
+// @Configuration
+// class ApiConfig {
 //    @Autowired
 //    private var messageSource: MessageSource? = null
 //    @Bean
@@ -25,7 +25,7 @@
 //    fun resourceBundleMessageSource(): MessageSource? {
 //        val messageSource = ResourceBundleMessageSource()
 //        messageSource.addBasenames("message")
-////        messageSource.setCacheSeconds(10)
+// //        messageSource.setCacheSeconds(10)
 //        messageSource.setDefaultEncoding("UTF-8");
 //        return messageSource
 //    }
@@ -36,4 +36,4 @@
 //        return messageSource
 //    }
 //
-//}
+// }

@@ -8,8 +8,8 @@ import org.mapstruct.Mapping
 @Mapper
 interface KonamonResourceMapper {
     @Mapping(source = "id", target = "konamonId")
-    fun konamonToResource(konamon : Konamon) : KonamonResource
+    fun konamonToResource(konamon: Konamon): KonamonResource
 
     @Mapping(source = "konamonId", target = "id")
-    fun resourceToKonamon(konamonResource : KonamonResource) : Konamon
+    fun resourceToKonamon(konamonResource: KonamonResource): Konamon
 }

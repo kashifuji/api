@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ApiErrorCreator {
-    fun createApiError (apiErrorDefinition: ApiErrorDefinition, vararg args: Any) : ApiError {
+    fun createApiError(apiErrorDefinition: ApiErrorDefinition, vararg args: Any): ApiError {
         var apiError = ApiError()
         apiError.error.code = apiErrorDefinition.code
         apiError.error.message = Message.getMessage(apiErrorDefinition.messageCode, *args)

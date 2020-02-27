@@ -1,7 +1,7 @@
 package com.katashiyo515.api.infrastructure.repository
 
-import com.katashiyo515.api.common.exception.ResourceLockedException
 import com.katashiyo515.api.common.exception.ResourceDelicateException
+import com.katashiyo515.api.common.exception.ResourceLockedException
 import com.katashiyo515.api.common.exception.ResourceNotFoundException
 import com.katashiyo515.api.domain.entity.Konamon
 import com.katashiyo515.api.domain.repository.KonamonRepository
@@ -18,13 +18,13 @@ class KonamonRepositoryImpl(private val konamonDbMapper: KonamonDbMapper) : Kona
         private val log = LoggerFactory.getLogger(this::class.java.enclosingClass)
     }
 
-    override fun findById(id : Int): Konamon {
+    override fun findById(id: Int): Konamon {
         return konamonDbMapper.findById(id) ?: throw ResourceNotFoundException(id = id)
     }
 
     override fun findAll(): List<Konamon> {
         var konamons = konamonDbMapper.findAll()
-        if ( konamons.isEmpty()) throw ResourceNotFoundException()
+        if (konamons.isEmpty()) throw ResourceNotFoundException()
         return konamons
     }
 
@@ -40,7 +40,7 @@ class KonamonRepositoryImpl(private val konamonDbMapper: KonamonDbMapper) : Kona
     override fun update(konamon: Konamon): Konamon {
         try {
             val count = konamonDbMapper.update(konamon)
-            if (count == 0 ) throw ResourceNotFoundException()
+            if (count == 0) throw ResourceNotFoundException()
         } catch (e: CannotAcquireLockException) {
             throw ResourceLockedException(id = 1).initCause(e)
         }
@@ -50,7 +50,7 @@ class KonamonRepositoryImpl(private val konamonDbMapper: KonamonDbMapper) : Kona
     override fun delete(id: Int) {
         try {
             val count = konamonDbMapper.delete(id)
-            if (count == 0 ) throw ResourceNotFoundException()
+            if (count == 0) throw ResourceNotFoundException()
         } catch (e: CannotAcquireLockException) {
             throw ResourceLockedException(id = 1).initCause(e)
         }
