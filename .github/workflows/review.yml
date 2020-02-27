@@ -2,15 +2,37 @@ name: Review
 on: [pull_request]
 
 jobs:
-  build:
-   name: Danger JS
-   runs-on: ubuntu-latest
-   steps:
-     - uses: actions/checkout@v1
-     - name: Danger
-       uses: danger/danger-js@9.1.6
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          version: 10.x
+      - name: install yarn
+        run: npm install -g yarn
+      - name: yarn install, build, and test
+        run: |
+          yarn install  --frozen-lockfile
+          yarn build
+          yarn test
+      - name: Danger
+        run: yarn danger ci
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# jobs:
+#   build:
+#    name: Danger JS
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - name: Danger
+#        uses: danger/danger-js@9.1.6
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 # on: 
 #   pull_request:
