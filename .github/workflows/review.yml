@@ -10,11 +10,19 @@ jobs:
   danger:
 
     runs-on: ubuntu-latest
-
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Danger JS Action
-      uses: danger/danger-js@9.2.10
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: setup Node.js
+        uses: actions/setup-node@v1
+      - name: install yarn
+      - run: npm install -g yarn
+      - name: install danger
+      - run: yarn add danger --dev
+      - name: run danger
+      - run: danger
+
+# yarn install
+#     - name: Danger JS Action
+#       uses: danger/danger-js@9.2.10
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
