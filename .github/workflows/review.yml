@@ -8,8 +8,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@master
-      - name: Build with Maven
+      - name: Build with Maven for ktlint
         run: mvn -B package --file pom.xml
+      - name: ktlint
+        run: mvn antrun:run@ktlint
       - name: setup Node.js
         uses: actions/setup-node@v1
       - name: install yarn
