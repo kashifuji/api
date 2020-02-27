@@ -2,7 +2,7 @@ name: Review
 on: [pull_request]
 
 jobs:
-  test:
+  danger:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,11 +13,13 @@ jobs:
           version: 10.x
       - name: install yarn
         run: npm install -g yarn
-      - name: yarn install, build, and test
-        run: |
-          yarn install  --frozen-lockfile
-          yarn build
-          yarn test
+      - name: install danger
+        run: yarn add danger --dev
+#       - name: yarn install, build, and test
+#         run: |
+#           yarn install  --frozen-lockfile
+#           yarn build
+#           yarn test
       - name: Danger
         run: yarn danger ci
         env: 
