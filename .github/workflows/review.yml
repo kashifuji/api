@@ -1,28 +1,40 @@
 name: Review
-
-on: 
-  pull_request:
-    branches:
-      - master
-      - release/*
+on: [pull_request]
 
 jobs:
-  danger:
+  build:
+   name: Danger JS
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v1
+     - name: Danger
+       uses: danger/danger-js@9.1.6
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }
 
-    runs-on: ubuntu-latest
-    steps:
-      - name: setup Node.js
-        uses: actions/setup-node@v1
-      - name: install yarn
-        run: npm install -g yarn
-      - name: install danger
-        run: yarn add danger --dev
-      - name: run danger
-        run: danger
+# on: 
+#   pull_request:
+#     branches:
+#       - master
+#       - release/*
 
-# yarn install
-#     - name: Danger JS Action
-#       uses: danger/danger-js@9.2.10
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# jobs:
+#   danger:
+
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: setup Node.js
+#         uses: actions/setup-node@v1
+#       - name: install yarn
+#         run: npm install -g yarn
+#       - name: install danger
+#         run: yarn add danger --dev
+#       - name: run danger
+#         run: danger
+
+# # yarn install
+# #     - name: Danger JS Action
+# #       uses: danger/danger-js@9.2.10
+# #       env:
+# #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
