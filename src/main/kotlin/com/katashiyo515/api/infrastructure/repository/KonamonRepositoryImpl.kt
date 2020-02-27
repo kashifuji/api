@@ -54,5 +54,6 @@ class KonamonRepositoryImpl(private val konamonDbMapper: KonamonDbMapper) : Kona
         } catch (e: CannotAcquireLockException) {
             throw ResourceLockedException(id = 1).initCause(e)
         }
+
     }
 }
