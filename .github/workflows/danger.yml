@@ -1,0 +1,16 @@
+name: Danger
+
+on: 
+  pull_request:
+    branches:
+      - master
+      - release/*
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Danger JS Action
+    - uses: danger/danger-js@9.1.8
