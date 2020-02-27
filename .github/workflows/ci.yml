@@ -1,6 +1,9 @@
 name: CI-codecov
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - 'test/**'
 
 jobs:
   build:
