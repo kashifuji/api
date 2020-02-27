@@ -14,11 +14,11 @@ jobs:
       - name: setup Node.js
         uses: actions/setup-node@v1
       - name: install yarn
-      - run: npm install -g yarn
+        run: npm install -g yarn
       - name: install danger
-      - run: yarn add danger --dev
+        run: yarn add danger --dev
       - name: run danger
-      - run: danger
+        run: danger
 
 # yarn install
 #     - name: Danger JS Action
