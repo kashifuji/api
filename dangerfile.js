@@ -1,16 +1,25 @@
 import { danger } from "danger"
 
-const docs = danger.git.fileMatch("**/*.md")
-const app = danger.git.fileMatch("src/**/*.ts")
-const tests = danger.git.fileMatch("*/__tests__/*")
-
-if (docs.edited) {
-  message("Thanks - We :heart: our [documentarians](http://www.writethedocs.org/)!")
+if (github.pr.title.indexOf(pattern) === 0){
+  warn("Work in progress")
 }
 
-if (app.modified && !tests.modified) {
-  warn("You have app changes without tests.")
-}
+
+// const docs = danger.git.fileMatch("**/*.md")
+// const app = danger.git.fileMatch("src/**/*.ts")
+// const tests = danger.git.fileMatch("*/__tests__/*")
+
+// if (docs.edited) {
+//   message("Thanks - We :heart: our [documentarians](http://www.writethedocs.org/)!")
+// }
+
+// if (app.modified && !tests.modified) {
+//   warn("You have app changes without tests.")
+// }
+
+
+  
+//is_wip = github.pr_title.include? '[WIP]'
 
 // // Check that every file touched has a corresponding test file
 // const correspondingTestsForAppFiles = touchedAppOnlyFiles.map(f => {
