@@ -1,6 +1,8 @@
 import { danger } from "danger"
-import contains from "lodash-contains"
+// import contains from "lodash-contains"
 import fs from "fs"
+import includes from "lodash.includes"
+import first from "lodash.first"
 
 // WIP
 if (danger.github.pr.title.indexOf('[WIP]') === 0){
@@ -15,14 +17,14 @@ if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
   fail("master should be merged from develop or hotfix")
 }
 
-const testFile = "target/ktlint.json"
-const linterOutput = fs.readFileSync(testFile).toString()
+// const testFile = "target/ktlint.json"
+// const linterOutput = fs.readFileSync(testFile).toString()
 
-if (contains(linterOutput, "Failed")) {
-  markdown(`These changes failed to pass the linter:
-${linterOutput}
-  `)
-}
+// if (contains(linterOutput, "Failed")) {
+//   markdown(`These changes failed to pass the linter:
+// ${linterOutput}
+//   `)
+// }
 
 // const docs = danger.git.fileMatch("**/*.md")
 // const app = danger.git.fileMatch("src/**/*.ts")
