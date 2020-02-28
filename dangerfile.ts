@@ -1,18 +1,36 @@
-// Import the feedback functions
-import { message, warn, fail, markdown } from "danger"
+// Check that every file touched has a corresponding test file
+const correspondingTestsForAppFiles = touchedAppOnlyFiles.map(f => {
+  const newPath = path.dirname(f)
+  const name = path.basename(f).replace(".ts", "-tests.ts")
+  return `${newPath}/__tests__/${name}`
+})
 
-// Add a message to the table
-message("You have added 2 more modules to the app")
+// New app files should get new test files
+// Allow warning instead of failing if you say "Skip New Tests" inside the body, make it explicit.
+const testFilesThatDontExist = correspondingTestsForAppFiles.filter(f => fs.existsSync(f))
+if (testFilesThatDontExist.length > 0) {
+  const callout = acceptedNoTests ? warn : fail
+  const output = `Missing Test Files:
+    ${testFilesThatDontExist.map(f => `  - [] \`${f}\``).join("\n")}
+    If these files are supposed to not exist, please update your PR body to include "Skip New Tests".
+  `
+  callout(output)
+}
+// // Import the feedback functions
+// import { message, warn, fail, markdown } from "danger"
 
-//  Adds a warning to the table
-warn("You have not included a CHANGELOG entry.")
+// // Add a message to the table
+// message("You have added 2 more modules to the app")
 
-// Declares a blocking 
-fail(`ESLint has failed with ${fails} fails.`)
+// //  Adds a warning to the table
+// warn("You have not included a CHANGELOG entry.")
 
-// Show markdown under the table:
-markdown("## New module Danger" + dangerYarnInfo)
-//import {message, danger} from "danger"
+// // Declares a blocking 
+// fail(`ESLint has failed with ${fails} fails.`)
+
+// // Show markdown under the table:
+// markdown("## New module Danger" + dangerYarnInfo)
+// //import {message, danger} from "danger"
 
 // # const modifiedMD = danger.git.modified_files.join("- ")
 // # message("Changed Files in this PR: \n - " + modifiedMD)
