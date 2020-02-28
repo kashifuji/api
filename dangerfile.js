@@ -1,8 +1,9 @@
 import { danger } from "danger"
 // import contains from "lodash-contains"
-import fs from "fs"
-import includes from "lodash.includes"
-import first from "lodash.first"
+const includes = require('lodash.includes');
+// import fs from "fs"
+// import includes from "lodash.includes"
+// import first from "lodash.first"
 
 // WIP
 if (danger.github.pr.title.indexOf('[WIP]') === 0){
