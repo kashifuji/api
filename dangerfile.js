@@ -10,7 +10,7 @@ const isMergeRefMaster = danger.github.pr.base.ref === 'master'; // master
 const isHeadRefDevelop = danger.github.pr.head.ref === 'develop'; // develop
 const isHeadRefHotfix  = danger.github.pr.head.ref.indexOf('hotfix/') === 0; // hotfix/xxx
 
-if (isMergeRefMaster && (!isHeadRefDevelop && isHeadRefHotfix)) {
+if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
   fail("master should be merged from develop or hotfix")
 }
 
