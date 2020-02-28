@@ -1,9 +1,18 @@
 import { danger } from "danger"
 
+// WIP
 if (danger.github.pr.title.indexOf('[WIP]') === 0){
   warn("Work in progress")
 }
 
+// chcek pr for master
+const isMergeRefMaster = danger.github.pr.base.ref === 'master'; // master
+const isHeadRefDevelop = danger.github.pr.head.ref === 'develop'; // develop
+const isHeadRefHotfix  = danger.github.pr.head.ref.indexOf('hotfix/') === 0; // hotfix/xxx
+
+if (isMergeRefMaster && (!isHeadRefDevelop && isHeadRefHotfix)) {
+  fail("master should be merged from develop or hotfix")
+}
 
 // const docs = danger.git.fileMatch("**/*.md")
 // const app = danger.git.fileMatch("src/**/*.ts")
@@ -19,7 +28,6 @@ if (danger.github.pr.title.indexOf('[WIP]') === 0){
 
 
   
-//is_wip = github.pr_title.include? '[WIP]'
 
 // // Check that every file touched has a corresponding test file
 // const correspondingTestsForAppFiles = touchedAppOnlyFiles.map(f => {
