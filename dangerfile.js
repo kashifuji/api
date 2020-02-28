@@ -1,6 +1,6 @@
 import { danger } from "danger"
 // import contains from "lodash-contains"
-const includes = require('lodash.includes');
+const { includes } = require('lodash.includes');
 // import fs from "fs"
 // import includes from "lodash.includes"
 // import first from "lodash.first"
