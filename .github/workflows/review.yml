@@ -24,6 +24,7 @@ jobs:
       - name: install danger
         run: |
           yarn add danger --dev
+          npm install -g lodash
         if: always()
       - name: Danger
         run: yarn danger ci
