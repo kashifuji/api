@@ -1,21 +1,35 @@
-// Check that every file touched has a corresponding test file
-const correspondingTestsForAppFiles = touchedAppOnlyFiles.map(f => {
-  const newPath = path.dirname(f)
-  const name = path.basename(f).replace(".ts", "-tests.ts")
-  return `${newPath}/__tests__/${name}`
-})
+import { danger } from "danger"
 
-// New app files should get new test files
-// Allow warning instead of failing if you say "Skip New Tests" inside the body, make it explicit.
-const testFilesThatDontExist = correspondingTestsForAppFiles.filter(f => fs.existsSync(f))
-if (testFilesThatDontExist.length > 0) {
-  const callout = acceptedNoTests ? warn : fail
-  const output = `Missing Test Files:
-    ${testFilesThatDontExist.map(f => `  - [] \`${f}\``).join("\n")}
-    If these files are supposed to not exist, please update your PR body to include "Skip New Tests".
-  `
-  callout(output)
+const docs = danger.git.fileMatch("**/*.md")
+const app = danger.git.fileMatch("src/**/*.ts")
+const tests = danger.git.fileMatch("*/__tests__/*")
+
+if (docs.edited) {
+  message("Thanks - We :heart: our [documentarians](http://www.writethedocs.org/)!")
 }
+
+if (app.modified && !tests.modified) {
+  warn("You have app changes without tests.")
+}
+
+// // Check that every file touched has a corresponding test file
+// const correspondingTestsForAppFiles = touchedAppOnlyFiles.map(f => {
+//   const newPath = path.dirname(f)
+//   const name = path.basename(f).replace(".ts", "-tests.ts")
+//   return `${newPath}/__tests__/${name}`
+// })
+
+// // New app files should get new test files
+// // Allow warning instead of failing if you say "Skip New Tests" inside the body, make it explicit.
+// const testFilesThatDontExist = correspondingTestsForAppFiles.filter(f => fs.existsSync(f))
+// if (testFilesThatDontExist.length > 0) {
+//   const callout = acceptedNoTests ? warn : fail
+//   const output = `Missing Test Files:
+//     ${testFilesThatDontExist.map(f => `  - [] \`${f}\``).join("\n")}
+//     If these files are supposed to not exist, please update your PR body to include "Skip New Tests".
+//   `
+//   callout(output)
+// }
 // // Import the feedback functions
 // import { message, warn, fail, markdown } from "danger"
 
