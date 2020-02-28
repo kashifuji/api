@@ -1,4 +1,7 @@
 import { danger } from "danger"
+import { contains } from "lodash-contains"
+import { fs } from "fs"
+
 
 // WIP
 if (danger.github.pr.title.indexOf('[WIP]') === 0){
@@ -12,9 +15,6 @@ const isHeadRefHotfix  = danger.github.pr.head.ref.indexOf('hotfix/') === 0; // 
 if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
   fail("master should be merged from develop or hotfix")
 }
-
-import contains from "lodash-contains"
-import fs from "fs"
 
 const testFile = "target/ktlint.json"
 const linterOutput = fs.readFileSync(testFile).toString()
