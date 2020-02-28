@@ -1,7 +1,6 @@
 import { danger } from "danger"
-import { contains } from "lodash-contains"
-import { fs } from "fs"
-
+import contains from "lodash-contains"
+import fs from "fs"
 
 // WIP
 if (danger.github.pr.title.indexOf('[WIP]') === 0){
