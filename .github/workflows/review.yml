@@ -17,11 +17,15 @@ jobs:
         if: always()
       - name: setup Node.js
         uses: actions/setup-node@v1
+        if: always()
       - name: install yarn
         run: npm install -g yarn
+        if: always()
       - name: install danger
         run: yarn add danger --dev
+        if: always()
       - name: Danger
         run: yarn danger ci
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: always()
