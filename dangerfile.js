@@ -1,6 +1,6 @@
 import { danger } from "danger"
 
-if (github.pr.title.indexOf(pattern) === 0){
+if (danger.github.pr.title.indexOf(pattern) === 0){
   warn("Work in progress")
 }
 
