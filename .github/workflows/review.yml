@@ -24,6 +24,7 @@ jobs:
       - name: install danger
         run: |
           yarn add danger --dev
+          npm install lodash --save
         if: always()
       - name: Danger
         run: yarn danger ci
