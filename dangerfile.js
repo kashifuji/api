@@ -23,6 +23,9 @@ if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
 
 const testFile = "target/ktlint.json"
 const linterOutput = fs.readFileSync(testFile).toString()
+markdown(`These changes failed to pass the linter:
+${linterOutput}
+  `)
 
 if (includes(linterOutput, "Failed")) {
   markdown(`These changes failed to pass the linter:
