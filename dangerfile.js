@@ -29,7 +29,10 @@ message("Hoge: " + linterOutput)
 const results = JSON.parse(fs.readFileSync(testFile, 'utf8'));
 
 results.forEach((result) => {
- message("File: " + result.file.toString())
+  message(result.file.toString() + "\n")
+  result.errors.forEach((error) => {
+    message(error.line.toString() + ":" +  error.column.toString() + ": " +  error.message.toString() + "\n")
+  });
 });
 
 // markdown(`These changes failed to pass the linter:
