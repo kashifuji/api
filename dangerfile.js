@@ -1,8 +1,8 @@
 import { danger } from "danger"
-const { contains } = require('lodash');
+import { includes } from "lodash.includes" 
+//const { includes } = require('lodash.includes');
 const { fs } = require('fs');
 
-//const { includes } = require('lodash.includes');
 // import fs from "fs"
 // import includes from "lodash.includes"
 // import first from "lodash.first"
@@ -23,7 +23,7 @@ if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
 const testFile = "target/ktlint.json"
 const linterOutput = fs.readFileSync(testFile).toString()
 
-if (contains(linterOutput, "Failed")) {
+if (includes(linterOutput, "Failed")) {
   markdown(`These changes failed to pass the linter:
 ${linterOutput}
   `)
