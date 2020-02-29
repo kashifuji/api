@@ -21,21 +21,28 @@ if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
   fail("master should be merged from develop or hotfix")
 }
 
+// check ktlint
 const testFile = "target/ktlint.json"
 const linterOutput = fs.readFileSync(testFile).toString()
 message("Hoge: " + linterOutput)
 
-markdown(`These changes failed to pass the linter:
-${linterOutput}
-  `)
+const results = JSON.parse(fs.readFileSync(testFile, 'utf8'));
 
-message("Hoge: " + linterOutput)
+results.forEach((result) => {
+ message("File: " + result.file.toString())
+});
 
-if (includes(linterOutput, "Failed")) {
-  markdown(`These changes failed to pass the linter:
-${linterOutput}
-  `)
-}
+// markdown(`These changes failed to pass the linter:
+// ${linterOutput}
+//   `)
+
+// message("Hoge: " + linterOutput)
+
+// if (includes(linterOutput, "Failed")) {
+//   markdown(`These changes failed to pass the linter:
+// ${linterOutput}
+//   `)
+// }
 
 // const docs = danger.git.fileMatch("**/*.md")
 // const app = danger.git.fileMatch("src/**/*.ts")
