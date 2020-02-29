@@ -28,4 +28,5 @@ interface KonamonDbMapper {
 
     @Delete("DELETE FROM konamon WHERE id = #{id}")
     fun delete(id: Int): Int
+
 }
