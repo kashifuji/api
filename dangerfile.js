@@ -2,7 +2,7 @@ import { danger } from "danger"
 const includes = require('lodash.includes');
 //import { includes } from "lodash.includes" 
 //const { includes } = require('lodash.includes');
-const { fs } = require('fs');
+const fs = require("fs");
 
 // import fs from "fs"
 // import includes from "lodash.includes"
