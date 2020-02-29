@@ -22,6 +22,7 @@ if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
 }
 
 // check ktlint
+markdown("# ktlint")
 const testFile = "target/ktlint.json"
 const linterOutput = fs.readFileSync(testFile).toString()
 message("Hoge: " + linterOutput)
@@ -29,9 +30,14 @@ message("Hoge: " + linterOutput)
 const results = JSON.parse(fs.readFileSync(testFile, 'utf8'));
 
 results.forEach((result) => {
-  message(result.file.toString() + "\n")
+  const fileName = result.file.toString()
+//  message(result.file.toString() + "\n")
   result.errors.forEach((error) => {
-    message(error.line.toString() + ":" +  error.column.toString() + ": " +  error.message.toString() + "\n")
+    const line = error.line.toString()
+    const column = error.column.toString()
+    const message = error.message.toString()
+//    message(error.line.toString() + ":" +  error.column.toString() + ": " +  error.message.toString() + "\n")
+    fail(fileName + " : " + line + ":" +  column + ": " +  message + "\n")
   });
 });
 
