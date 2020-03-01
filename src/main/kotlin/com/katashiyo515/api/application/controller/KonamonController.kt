@@ -46,7 +46,7 @@ class KonamonController(private val konamonRepository: KonamonRepository) {
     @ApiOperation(value = "粉もん情報リストを参照します", notes = "粉もん情報リストを参照します")
     @ApiResponses(
         ApiResponse(code = 404, message = "resource not found", response = ApiError::class)
-    )    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
+    ) @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(HttpStatus.OK)
     fun list(): List<KonamonResource> {
         val konamons = konamonRepository.findAll()

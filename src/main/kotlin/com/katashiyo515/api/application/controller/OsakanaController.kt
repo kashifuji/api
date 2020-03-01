@@ -1,6 +1,5 @@
 package com.katashiyo515.api.application.controller
 
-import com.katashiyo515.api.application.resource.KonamonResource
 import com.katashiyo515.api.application.resource.OsakanaResource
 import com.katashiyo515.api.common.error.ApiError
 import io.swagger.annotations.Api
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import java.util.stream.Collectors
 
 @Api(tags = ["お魚情報"], description = "お魚情報を操作する")
 @ApiResponses(
@@ -35,5 +33,4 @@ class OsakanaController {
             osakana
         )
     }
-
 }
