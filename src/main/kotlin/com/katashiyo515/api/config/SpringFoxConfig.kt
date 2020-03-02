@@ -14,9 +14,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @EnableSwagger2
 class SpringFoxConfig {
     @Bean
+    fun api(): Docket {
+        return Docket(DocumentationType.SWAGGER_2)
+            .groupName("food")
+            .select()
+            .apis(RequestHandlerSelectors.any())
+            .paths(PathSelectors.regex("/api/.*"))
+            .build()
+            .apiInfo(apiInfo("食べ物API", "食べ物情報を操作する", ""))
+    }
+
+    @Bean
     fun konamonApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-            .groupName("粉もんAPI")
+            .groupName("konaon")
             .select()
             .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.regex("/api/v0.0.2/konamons.*"))
@@ -27,7 +38,7 @@ class SpringFoxConfig {
     @Bean
     fun osakanaApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-            .groupName("お魚API")
+            .groupName("fish")
             .select()
             .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.regex("/api/v0.0.1/fishes.*"))
