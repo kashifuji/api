@@ -57,8 +57,8 @@ jobs:
       run: |
         yarn add danger --dev
       if: always()
-    - name: cat
-      run: cat target/ktlint.json
+    - name: ls
+      run: ls target/* -ltr
       if: always()
     - name: Danger
       run: yarn danger ci
