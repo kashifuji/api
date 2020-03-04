@@ -12,9 +12,6 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: ktlint
         run: mvn antrun:run@ktlint
-      - name: ls
-        run: ls -l target
-        if: always()
       - name: setup Node.js
         uses: actions/setup-node@v1
         if: always()
@@ -24,6 +21,9 @@ jobs:
       - name: install danger
         run: |
           yarn add danger --dev
+        if: always()
+      - name: cat
+        run: cat target/ktlint.json
         if: always()
       - name: Danger
         run: yarn danger ci
