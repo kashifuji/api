@@ -16,7 +16,7 @@ if (isMergeRefMaster && (!isHeadRefDevelop && !isHeadRefHotfix)) {
 }
 
 // check ktlint
-const testFile = "target/ktlint.json"
+const testFile = "target/ktlint/ktlint.json"
 const results = JSON.parse(fs.readFileSync(testFile, 'utf8'));
 
 results.forEach((result) => {
