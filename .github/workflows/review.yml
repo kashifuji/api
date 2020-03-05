@@ -7,10 +7,9 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-#    - name: Build with Maven for ktlint
-#      run: mvn -B package --file pom.xml
     - name: ktlint
       run: mvn antrun:run@ktlint
+      if: always()
     - name: Upload lint artifact
       uses: actions/upload-artifact@v1.0.0
       with:
