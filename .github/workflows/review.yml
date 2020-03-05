@@ -10,11 +10,11 @@ jobs:
     - name: ktlint
       run: mvn antrun:run@ktlint
     - name: Upload lint artifact
+      if: always()
       uses: actions/upload-artifact@v1.0.0
       with:
         name: lint-artifact
         path: ./target/ktlint
-      if: always()
         
   test:
     runs-on: ubuntu-latest
@@ -38,6 +38,7 @@ jobs:
   danger:
     runs-on: ubuntu-latest
     needs: lint
+    if: always()
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -48,19 +49,14 @@ jobs:
         path: ./target/ktlint
     - name: setup Node.js
       uses: actions/setup-node@v1
-      if: always()
     - name: install yarn
       run: npm install -g yarn
-      if: always()
     - name: install danger
-      run: |
-        yarn add danger --dev
-      if: always()
+      run: yarn add danger --dev
     - name: Danger
       run: yarn danger ci
       env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: always()
 
   codecov:
     runs-on: ubuntu-latest
