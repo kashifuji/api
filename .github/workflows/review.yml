@@ -7,8 +7,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: Build with Maven for ktlint
-      run: mvn -B package --file pom.xml
+#    - name: Build with Maven for ktlint
+#      run: mvn -B package --file pom.xml
     - name: ktlint
       run: mvn antrun:run@ktlint
     - name: Upload lint artifact
@@ -56,9 +56,6 @@ jobs:
     - name: install danger
       run: |
         yarn add danger --dev
-      if: always()
-    - name: ls
-      run: ls target/* -ltr
       if: always()
     - name: Danger
       run: yarn danger ci
