@@ -42,7 +42,7 @@ class KonamonRepositoryImpl(private val konamonDbMapper: KonamonDbMapper) : Kona
             val count = konamonDbMapper.update(konamon)
             if (count == 0) throw ResourceNotFoundException()
         } catch (e: CannotAcquireLockException) {
-            throw ResourceLockedException(id = 1).initCause(e)
+            throw ResourceLockedException(id = konamon.id).initCause(e)
         }
         return konamon
     }
@@ -52,7 +52,7 @@ class KonamonRepositoryImpl(private val konamonDbMapper: KonamonDbMapper) : Kona
             val count = konamonDbMapper.delete(id)
             if (count == 0) throw ResourceNotFoundException()
         } catch (e: CannotAcquireLockException) {
-            throw ResourceLockedException(id = 1).initCause(e)
+            throw ResourceLockedException(id = id).initCause(e)
         }
     }
 }
