@@ -3,6 +3,7 @@ package com.katashiyo515.api.application.controller
 import com.katashiyo515.api.application.mapper.KonamonResourceMapper
 import com.katashiyo515.api.application.resource.KonamonResource
 import com.katashiyo515.api.common.error.ApiError
+
 import com.katashiyo515.api.domain.repository.KonamonRepository
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -89,3 +90,5 @@ class KonamonController(private val konamonRepository: KonamonRepository) {
         konamonRepository.delete(id)
     }
 }
+
+
