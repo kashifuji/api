@@ -16,7 +16,6 @@ class SpringFoxConfig {
     @Bean
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-            .groupName("food")
             .select()
             .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.regex("/api/.*"))

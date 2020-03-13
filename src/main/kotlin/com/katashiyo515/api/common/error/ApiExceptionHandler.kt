@@ -17,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
@@ -31,6 +32,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     // 　すべての例外に共通する処理
     override fun handleExceptionInternal(ex: Exception, body: Any?, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
+        body ?: log.error("[{}] {}", ErrorCodeDefinition.UnKnown.code, Message.getMessage(ErrorCodeDefinition.UnKnown.code), ex)
         return ResponseEntity.status(status).headers(headers).body(
                 body ?: apiErrorCreator.createApiError(ApiErrorDefinition.INTERNAL_SERVER_ERROR)
         )
@@ -42,6 +44,20 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         return handleExceptionInternal(ex,
                 apiErrorCreator.createApiError(ApiErrorDefinition.NOT_FOUND),
                 headers, status, request)
+    }
+
+    // /api/v0.0.2/konamons/1a
+    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    fun handleResourceNotFoundException(e: MethodArgumentTypeMismatchException, request: WebRequest): ResponseEntity<Any> {
+        val message = String.format(
+            "'%s' should be a valid '%s'",
+            e.name, e.requiredType?.simpleName
+        )
+
+        log.error("[{}] {}", ErrorCodeDefinition.BAD_REQUEST, Message.getMessage(ErrorCodeDefinition.BAD_REQUEST.code, message), e)
+        return handleExceptionInternal(e,
+            apiErrorCreator.createApiError(ApiErrorDefinition.BAD_REQUEST, message),
+            HttpHeaders(), HttpStatus.BAD_REQUEST, request)
     }
 
     override fun handleHttpMessageNotReadable(ex: HttpMessageNotReadableException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
